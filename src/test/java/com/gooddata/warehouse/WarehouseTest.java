@@ -5,7 +5,8 @@
  */
 package com.gooddata.warehouse;
 
-import static com.gooddata.JsonMatchers.serializesToJson;
+import static net.javacrumbs.jsonunit.JsonMatchers.jsonEquals;
+import static net.javacrumbs.jsonunit.core.util.ResourceUtils.resource;
 import static com.gooddata.util.ResourceUtils.readObjectFromResource;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
@@ -46,19 +47,19 @@ public class WarehouseTest {
     public void testSerializationForInstanceCreation() throws Exception {
         final Warehouse warehouse = new Warehouse("New ADS", "Your-ADS-Token", "ADS Description");
         warehouse.setEnvironment(Environment.TESTING);
-        assertThat(warehouse, serializesToJson("/warehouse/warehouse-create.json"));
+        assertThat(warehouse, jsonEquals(resource("warehouse/warehouse-create.json")));
     }
 
     @Test
     public void testSerialization() throws Exception {
         final Warehouse warehouse = new Warehouse(TITLE, TOKEN, DESCRIPTION, CREATED, UPDATED, CREATED_BY, UPDATED_BY, STATUS, ENVIRONMENT, CONNECTION_URL, LINKS);
-        assertThat(warehouse, serializesToJson("/warehouse/warehouse.json"));
+        assertThat(warehouse, jsonEquals(resource("warehouse/warehouse.json")));
     }
 
     @Test
     public void testSerializationWithNullToken() throws Exception {
         final Warehouse warehouse = new Warehouse(TITLE, null, DESCRIPTION, CREATED, UPDATED, CREATED_BY, UPDATED_BY, STATUS, ENVIRONMENT, CONNECTION_URL, LINKS);
-        assertThat(warehouse, serializesToJson("/warehouse/warehouse-null-token.json"));
+        assertThat(warehouse, jsonEquals(resource("warehouse/warehouse-null-token.json")));
     }
 
     @Test

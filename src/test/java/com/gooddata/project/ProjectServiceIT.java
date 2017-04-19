@@ -18,11 +18,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import static com.gooddata.JsonMatchers.isJsonString;
 import static com.gooddata.util.ResourceUtils.OBJECT_MAPPER;
 import static com.gooddata.util.ResourceUtils.readFromResource;
 import static com.gooddata.util.ResourceUtils.readObjectFromResource;
 import static net.jadler.Jadler.onRequest;
+import static net.javacrumbs.jsonunit.core.util.ResourceUtils.resource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
@@ -172,7 +172,7 @@ public class ProjectServiceIT extends AbstractGoodDataIT {
         onRequest()
                 .havingPathEqualTo(validateUri)
                 .havingMethodEqualTo("POST")
-                .havingBody(isJsonString("/project/project-validate.json"))
+                .havingBody(is(resource("project/project-validate.json")))
             .respond()
                 .withBody(OBJECT_MAPPER.writeValueAsString(new AsyncTask(task1Uri)))
                 .withStatus(201);
@@ -220,7 +220,7 @@ public class ProjectServiceIT extends AbstractGoodDataIT {
         onRequest()
                 .havingPathEqualTo(validateUri)
                 .havingMethodEqualTo("POST")
-                .havingBody(isJsonString("/project/project-validate.json"))
+                .havingBody(is(resource("project/project-validate.json")))
             .respond()
                 .withBody(OBJECT_MAPPER.writeValueAsString(new AsyncTask(task1Uri)))
                 .withStatus(201);

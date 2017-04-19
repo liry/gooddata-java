@@ -9,16 +9,16 @@ import com.gooddata.AbstractGoodDataIT;
 import com.gooddata.GoodDataException;
 import com.gooddata.gdc.UriResponse;
 import com.gooddata.project.Project;
-import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.gooddata.JsonMatchers.serializesToJson;
 import static com.gooddata.connector.Status.Code.ERROR;
 import static com.gooddata.connector.Status.Code.SYNCHRONIZED;
 import static com.gooddata.util.ResourceUtils.*;
 import static java.util.Collections.singletonMap;
 import static net.jadler.Jadler.onRequest;
+import static net.javacrumbs.jsonunit.JsonMatchers.jsonEquals;
+import static net.javacrumbs.jsonunit.core.util.ResourceUtils.resource;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -206,7 +206,7 @@ public class ConnectorServiceIT extends AbstractGoodDataIT {
                 .withBody(readFromResource("/connector/settings-zendesk4.json"));
 
         final Zendesk4Settings zendesk4Settings = connectors.getZendesk4Settings(project);
-        assertThat(zendesk4Settings, serializesToJson("/connector/settings-zendesk4.json"));
+        assertThat(zendesk4Settings, jsonEquals(resource("connector/settings-zendesk4.json")));
     }
 
     @Test(expectedExceptions = ConnectorException.class)
